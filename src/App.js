@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import Graph from './components/graph';
+
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { stockList: null };
+    this.state = { 
+      stockList: null
+    };
 
     this.getStockData = this.getStockData.bind(this);
   }
@@ -18,14 +22,18 @@ class App extends Component {
   }
 
   getStockData() {
-    const data = [
-      {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
-      {name: 'Page B', uv: 3000, pv: 1398, amt: 2210},
-    ];
+
+  axios.get('https://api.iextrading.com/1.0/stock/watt/chart/6m')
+  .then((response) => {
+    const data = response.data;
 
     this.setState({
       stockList: data 
     });
+
+  }).catch((error) => {
+    console.log(error);
+  });
   }
 
   render() {
@@ -36,7 +44,7 @@ class App extends Component {
             <h1 className='text-center'>Stocks vs Trends</h1>
           </div>
         </div>
-        
+
         <div className="row">
           <div className="col-md-8">
             <Graph stockList={this.state.stockList} />
