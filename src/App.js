@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Graph from './components/graph';
+import StockGraph from './components/stock_graph';
 
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -48,7 +48,7 @@ class App extends Component {
 
         <div className="row">
           <div className="col-md-8">
-            <Graph stockList={this.state.stockList} />
+            <StockGraph stockList={this.state.stockList} />
           </div>
         </div>
       </div>
