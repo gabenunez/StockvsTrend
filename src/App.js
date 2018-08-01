@@ -22,18 +22,19 @@ class App extends Component {
   }
 
   getStockData() {
+    // Get stock data from the remote api and set that as state.
 
-  axios.get('https://api.iextrading.com/1.0/stock/watt/chart/6m')
-  .then((response) => {
-    const data = response.data;
+    axios.get('https://api.iextrading.com/1.0/stock/watt/chart/6m')
+    .then((response) => {
+      const data = response.data;
 
-    this.setState({
-      stockList: data 
+      this.setState({
+        stockList: data 
+      });
+
+    }).catch((error) => {
+      console.log(error);
     });
-
-  }).catch((error) => {
-    console.log(error);
-  });
   }
 
   render() {
