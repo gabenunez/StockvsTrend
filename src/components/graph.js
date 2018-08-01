@@ -10,8 +10,10 @@ const Graph = (props) => {
 
     return (
         <ResponsiveContainer width='100%' height={300}>
-            <LineChart data={props.stockList}
-            margin={{top: 5, bottom: 5}}>
+            <LineChart 
+                data={props.stockList}
+                margin={{top: 5, bottom: 5}}>
+            >
                 <XAxis 
                     dataKey='date'
                     tick={{fontSize: 14}}
