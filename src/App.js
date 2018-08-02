@@ -11,8 +11,6 @@ class App extends Component {
     this.state = { 
       stockList: null
     };
-
-    this.getStockData = this.getStockData.bind(this);
   }
 
   // Runs as soon as App is mounted to dom
