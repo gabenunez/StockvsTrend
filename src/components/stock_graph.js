@@ -3,7 +3,6 @@ import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tool
 
 const Graph = (props) => {
 
-    console.log(props.stockList);
     if(!props.stockList) {
         return <div>Loading...</div>;
     }
