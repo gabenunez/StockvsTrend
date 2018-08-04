@@ -9,7 +9,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      stockList: null
+      stockList: null,
+      trendsData: null
     };
   }
 
@@ -17,7 +18,26 @@ class App extends Component {
   // and gets stock data.
   componentDidMount() {
     this.getStockData();
+
+    this.callApi()
+    .then(trendsData => this.setState({ trendsData }))
+    .catch(err => console.log(err));
   }
+
+  // Magic from 
+  // https://tinyurl.com/nodewithreact
+  callApi = async () => {
+    const response = await fetch('/api/hello');
+    const body = await response.json();
+    
+    const parsedData = JSON.parse(body.results);
+
+    console.log(parsedData.default);
+
+    if (response.status !== 200) throw Error(body.message);
+
+    return parsedData;
+  };
 
   getStockData() {
     // Get stock data from the remote api and set that as state.
@@ -27,7 +47,7 @@ class App extends Component {
       const data = response.data;
 
       this.setState({
-        stockList: data 
+        stockList: data
       });
 
     }).catch((error) => {
