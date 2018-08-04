@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Graph from './components/graph';
+import Form from './components/form';
 
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -11,7 +12,8 @@ class App extends Component {
     this.state = { 
       stockData: null,
       trendsData: null,
-
+      selectedStock: null,
+      selectedDateRange: null
     };
   }
 
@@ -61,14 +63,12 @@ class App extends Component {
   render() {
     return (
       <div className="container-fluid">
-        <div className='row'>
-          <div className='col-md-12'>
-            <h1 className='text-center'>Stocks vs Trends</h1>
-          </div>
-        </div>
-
         <div className="row">
-          <div className="col-md-8">
+          <div className='col-md-4 order-1'>
+            <h1 className='text-center'>Stocks vs Trends</h1>
+            <Form />
+          </div>
+          <div className="col-md-8 order-2">
             <div className='row'>
               <div className='col-md-12'>
                 <Graph 
@@ -92,8 +92,8 @@ class App extends Component {
                 />
               </div>
             </div>
-
           </div>
+
         </div>
       </div>
     );
