@@ -12,22 +12,27 @@ class App extends Component {
     this.state = { 
       stockData: null,
       trendsData: null,
-      selectedStock: null,
-      selectedDateRange: null
+      tickerSymbol: 'AAPL',
+      trendSearchTerm: 'iPhones',
+      dateRange: '1 Year'
     };
+
+    this.resetFormFields = this.resetFormFields.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  // Runs as soon as App is mounted to dom
-  // and gets stock data.
   componentDidMount() {
+    // Runs as soon as App is mounted to dom
+    // and gets stock data.
+
     this.getStockData();
     this.getTrendData();
   }
 
-  // Magic from 
-  // https://tinyurl.com/nodewithreact
-
   getTrendData() {
+    // Magic from 
+    // https://tinyurl.com/nodewithreact
+
     const getData = async () => {
       const response = await fetch('/api/hello');
       const body = await response.json();
@@ -60,13 +65,43 @@ class App extends Component {
     });
   }
 
+  resetFormFields() {
+    this.setState({
+        tickerSymbol: '',
+        trendSearchTerm: '',
+        dateRange: 'select-date'
+    });
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleOnSubmit(event) {
+    event.preventDefault();
+  }
+
   render() {
     return (
       <div className="container-fluid">
         <div className="row">
           <div className='col-md-4 order-1'>
             <h1 className='text-center'>Stocks vs Trends</h1>
-            <Form />
+            <Form
+              resetFormFields={this.resetFormFields}
+              handleInputChange={this.handleInputChange}
+              handleOnSubmit={this.handleOnSubmit}
+
+              tickerSymbol={this.state.tickerSymbol}
+              trendSearchTerm={this.state.trendSearchTerm}
+              dateRange={this.state.dateRange}
+            />
           </div>
           <div className="col-md-8 order-2">
             <div className='row'>
