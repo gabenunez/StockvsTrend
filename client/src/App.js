@@ -20,14 +20,44 @@ class App extends Component {
 
     this.resetFormFields = this.resetFormFields.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.getStockData = this.getStockData.bind(this);
+    this.handleOnSubmit = this.handleOnSubmit.bind(this);
+    this.updateGraphsWithState = this.updateGraphsWithState.bind(this);
   }
 
   componentDidMount() {
     // Runs as soon as App is mounted to dom
     // and gets stock data.
 
-    this.getStockData();
+    this.updateGraphsWithState();
+  }
+
+  updateGraphsWithState() {
+    this.getStockData(this.state.tickerSymbol, this.state.dateRange);
     this.getTrendData();
+  }
+
+  resetFormFields() {
+    this.setState({
+        tickerSymbol: 'AAPL',
+        trendSearchTerm: 'iPhones',
+        dateRange: '1 Year'
+    });
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleOnSubmit(event) {
+    event.preventDefault();
+    this.updateGraphsWithState();
   }
 
   getTrendData() {
@@ -50,10 +80,35 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-  getStockData() {
+  getStockData(stockTicker, timeFrame) {
     // Get stock data from the remote api and set that as state.
+    let formatedTimeFrame = null;
 
-    axios.get('https://api.iextrading.com/1.0/stock/watt/chart/6m')
+    switch (timeFrame) {
+      case '1 Month':
+        formatedTimeFrame = '1m';
+        break;
+      case '3 Months':
+        formatedTimeFrame = '3m';
+        break;
+      case '6 Months':
+        formatedTimeFrame = '6m';
+        break;
+      case '1 Year':
+        formatedTimeFrame = '1y';
+        break;
+      case '2 Years':
+        formatedTimeFrame = '2y';
+        break;
+      case '5 Years':
+        formatedTimeFrame = '5y';
+        break;
+      default:
+        console.log('Error with timeframe selection.')
+        break;
+    }
+
+    axios.get(`https://api.iextrading.com/1.0/stock/${stockTicker}/chart/${formatedTimeFrame}`)
     .then((response) => {
       const data = response.data;
 
@@ -64,28 +119,6 @@ class App extends Component {
     }).catch((error) => {
       console.log(error);
     });
-  }
-
-  resetFormFields() {
-    this.setState({
-        tickerSymbol: '',
-        trendSearchTerm: '',
-        dateRange: 'Select a date range'
-    });
-  }
-
-  handleInputChange(event) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
-  }
-
-  handleOnSubmit(event) {
-    event.preventDefault();
   }
 
   render() {
