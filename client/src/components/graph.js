@@ -1,5 +1,5 @@
 import React from 'react';
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 
 const Graph = (props) => {
 
@@ -11,7 +11,7 @@ const Graph = (props) => {
         <ResponsiveContainer width='100%' height={300}>
             <LineChart 
                 data={props.list}
-                margin={{top: 5, bottom: 5, left: -30}}>
+                margin={{top: 10, bottom: 10, left: -30}}>
             >
                 <XAxis 
                     dataKey={props.xAxis_dataKey}
@@ -22,7 +22,6 @@ const Graph = (props) => {
                 />
                 <CartesianGrid strokeDasharray='6 6'/>
                 <Tooltip/>
-                <Legend />
                 <Line
                     name={props.line_name}
                     type='monotone'
