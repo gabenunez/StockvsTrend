@@ -19,14 +19,14 @@ class App extends Component {
   componentDidMount() {
     this.getStockData();
 
-    this.callApi()
+    this.getTrendData()
     .then(trendsData => this.setState({ trendsData }))
     .catch(err => console.log(err));
   }
 
   // Magic from 
   // https://tinyurl.com/nodewithreact
-  callApi = async () => {
+  getTrendData = async () => {
     const response = await fetch('/api/hello');
     const body = await response.json();
     
