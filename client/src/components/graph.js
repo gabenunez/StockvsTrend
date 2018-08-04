@@ -11,7 +11,7 @@ const Graph = (props) => {
         <ResponsiveContainer width='100%' height={300}>
             <LineChart 
                 data={props.list}
-                margin={{top: 5, bottom: 5}}>
+                margin={{top: 5, bottom: 5, left: -30}}>
             >
                 <XAxis 
                     dataKey={props.xAxis_dataKey}
@@ -27,7 +27,7 @@ const Graph = (props) => {
                     name={props.line_name}
                     type='monotone'
                     dataKey={props.line_dataKey}
-                    stroke='#8884d8'
+                    stroke={props.line_color}
                     dot={false}
                 />
             </LineChart>

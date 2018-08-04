@@ -74,6 +74,7 @@ class App extends Component {
                   list={this.state.stockList} 
                   line_name='Stock'
                   line_dataKey='close'
+                  line_color='#8884d8'
                   xAxis_dataKey='date'
                 />
               </div>
@@ -85,6 +86,7 @@ class App extends Component {
                   list={this.state.trendsData}
                   line_name='Google Trend'
                   line_dataKey='value'
+                  line_color='#f54336'
                   xAxis_dataKey='formattedTime'
                 />
               </div>
