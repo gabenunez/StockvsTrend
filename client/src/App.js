@@ -18,24 +18,28 @@ class App extends Component {
   // and gets stock data.
   componentDidMount() {
     this.getStockData();
-
-    this.getTrendData()
-    .then(trendsData => this.setState({ trendsData }))
-    .catch(err => console.log(err));
+    this.getTrendData();
   }
 
   // Magic from 
   // https://tinyurl.com/nodewithreact
-  getTrendData = async () => {
-    const response = await fetch('/api/hello');
-    const body = await response.json();
-    
-    const parsedData = JSON.parse(body.results);
 
-    if (response.status !== 200) throw Error(body.message);
+  getTrendData() {
+    const getData = async () => {
+      const response = await fetch('/api/hello');
+      const body = await response.json();
+      
+      const parsedData = JSON.parse(body.results);
+  
+      if (response.status !== 200) throw Error(body.message);
+  
+      return parsedData.default.timelineData;
+    };
 
-    return parsedData.default.timelineData;
-  };
+    getData()
+      .then(trendsData => this.setState({ trendsData }))
+      .catch(err => console.log(err));
+  }
 
   getStockData() {
     // Get stock data from the remote api and set that as state.
