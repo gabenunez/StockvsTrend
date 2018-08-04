@@ -38,13 +38,13 @@ const Form = (props) => {
                     className='form-control' 
                     id='date-select'
                 >
-                    <option value='select-date'>Select a date range</option>
-                    <option value='1 Month'>1 Month</option>
-                    <option value='3 Months'>3 Months</option>
-                    <option value='6 Months'>6 Months</option>
-                    <option value='1 Year'>1 Year</option>
-                    <option value='2 Years'>2 Years</option>
-                    <option value='5 Years'>5 Years</option>
+                    <option>Select a date range</option>
+                    <option>1 Month</option>
+                    <option>3 Months</option>
+                    <option>6 Months</option>
+                    <option>1 Year</option>
+                    <option>2 Years</option>
+                    <option>5 Years</option>
                 </select>
             </div>
             
