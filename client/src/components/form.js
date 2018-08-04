@@ -1,40 +1,102 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const Form = (props) => {
-    return (
-        <form>
-            <div className='form-group'>
-                <label for='stock'>Ticker Symbol:</label>
-                <input type='text' name='stock-ticker' className='form-control' id='stock' placeholder='i.e. AAPL' />
-            </div>
+class Form extends Component {
+    constructor(props) {
+        super(props);
 
-            <div className='form-group'>
-                <label for='trends'>Google Trends Search Term:</label>
-                <input type='text' name='trends' className='form-control' id='trends' placeholder='i.e. Steve Wozniak' />
-            </div>
+        this.state = {
+            tickerSymbol: 'AAPL',
+            trendSearchTerm: 'iPhones',
+            dateRange: '1 Year'
+        };
 
-            <div className='form-group'>
-                <label for='date-select'>Date Range:</label>
-                <select className='form-control' id='date-select'>
-                    <option>1 Month</option>
-                    <option>3 Months</option>
-                    <option>6 Months</option>
-                    <option>1 Year</option>
-                    <option>2 Years</option>
-                    <option>5 Years</option>
-                </select>
-            </div>
-            
-            <div className='form-row'>
-                <div className='col'>
-                    <button type='submit' className='btn btn-primary btn-block'>Submit</button>
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleOnSubmit = this.handleOnSubmit.bind(this);
+        this.resetFormFields = this.resetFormFields.bind(this);
+    }
+
+    resetFormFields() {
+        this.setState({
+            tickerSymbol: '',
+            trendSearchTerm: '',
+            dateRange: 'select-date'
+        });
+    }
+
+    handleOnSubmit(event) {
+        event.preventDefault();
+    }
+
+    // Ugly! Fix all these into something better.
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+    
+        this.setState({
+          [name]: value
+        });
+      }
+
+    render() {
+        return (
+            <form onSubmit={this.handleOnSubmit}>
+                <div className='form-group'>
+                <label htmlFor='stock'>Ticker Symbol:</label>
+                <input 
+                    value={this.state.tickerSymbol} 
+                    onChange={this.handleInputChange} 
+                    type='text' 
+                    name='tickerSymbol' 
+                    className='form-control' 
+                    id='stock' 
+                    placeholder='i.e. AAPL' 
+                />
                 </div>
-                <div className='col'>
-                    <button type='submit' className='btn btn-light btn-block'>Reset</button>
+
+                <div className='form-group'>
+                    <label htmlFor='trends'>Google Trends Search Term:</label>
+                    <input
+                        value={this.state.trendSearchTerm} 
+                        onChange={this.handleInputChange}
+                        type='text' 
+                        name='trendSearchTerm' 
+                        className='form-control' 
+                        id='trends' 
+                        placeholder='i.e. iPhones'
+                    />
                 </div>
-            </div>
-        </form>
-    );
+
+                <div className='form-group'>
+                    <label htmlFor='date-select'>Date Range:</label>
+                    <select 
+                        name='dateRange' 
+                        value={this.state.dateRange} 
+                        onChange={this.handleInputChange} 
+                        className='form-control' 
+                        id='date-select'
+                    >
+                        <option value='select-date'>Select a date range</option>
+                        <option value='1 Month'>1 Month</option>
+                        <option value='3 Months'>3 Months</option>
+                        <option value='6 Months'>6 Months</option>
+                        <option value='1 Year'>1 Year</option>
+                        <option value='2 Years'>2 Years</option>
+                        <option value='5 Years'>5 Years</option>
+                    </select>
+                </div>
+                
+                <div className='form-row'>
+                    <div className='col'>
+                        <button type='submit' className='btn btn-primary btn-block'>Submit</button>
+                    </div>
+                    <div className='col'>
+                        <button onClick={this.resetFormFields} className='btn btn-light btn-block'>Reset</button>
+                    </div>
+                </div>
+            </form>
+        )
+    };
 }
 
 export default Form;
