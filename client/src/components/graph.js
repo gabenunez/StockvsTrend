@@ -26,6 +26,7 @@ const Graph = (props) => {
                 <Line
                     name={props.line_name}
                     type='monotone'
+                    strokeWidth={3}
                     dataKey={props.line_dataKey}
                     stroke={props.line_color}
                     dot={false}
