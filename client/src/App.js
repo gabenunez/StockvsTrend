@@ -59,7 +59,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container-fluid">
         <div className='row'>
           <div className='col-md-12'>
             <h1 className='text-center'>Stocks vs Trends</h1>
