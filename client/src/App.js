@@ -9,8 +9,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      stockList: null,
-      trendsData: null
+      stockData: null,
+      trendsData: null,
+
     };
   }
 
@@ -49,7 +50,7 @@ class App extends Component {
       const data = response.data;
 
       this.setState({
-        stockList: data
+        stockData: data
       });
 
     }).catch((error) => {
@@ -71,7 +72,7 @@ class App extends Component {
             <div className='row'>
               <div className='col-md-12'>
                 <Graph 
-                  list={this.state.stockList} 
+                  list={this.state.stockData} 
                   line_name='Stock'
                   line_dataKey='close'
                   line_color='#8884d8'
