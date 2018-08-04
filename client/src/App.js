@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import StockGraph from './components/stock_graph';
+import Graph from './components/graph';
 
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -32,11 +32,9 @@ class App extends Component {
     
     const parsedData = JSON.parse(body.results);
 
-    console.log(parsedData.default);
-
     if (response.status !== 200) throw Error(body.message);
 
-    return parsedData;
+    return parsedData.default.timelineData;
   };
 
   getStockData() {
@@ -66,7 +64,28 @@ class App extends Component {
 
         <div className="row">
           <div className="col-md-8">
-            <StockGraph stockList={this.state.stockList} />
+            <div className='row'>
+              <div className='col-md-12'>
+                <Graph 
+                  list={this.state.stockList} 
+                  line_name='Stock'
+                  line_dataKey='close'
+                  xAxis_dataKey='date'
+                />
+              </div>
+            </div>
+
+            <div className='row'>
+              <div className='col-md-12'>
+                <Graph 
+                  list={this.state.trendsData}
+                  line_name='Google Trend'
+                  line_dataKey='value'
+                  xAxis_dataKey='formattedTime'
+                />
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
