@@ -11,7 +11,7 @@ const Graph = (props) => {
         <ResponsiveContainer width='100%' height={250}>
             <LineChart 
                 data={props.list}
-                margin={{top: 10, left: -30}}>
+                margin={{top: 10, left: -20}}>
             >
                 <XAxis 
                     dataKey={props.xAxis_dataKey}
