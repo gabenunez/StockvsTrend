@@ -34,7 +34,7 @@ class App extends Component {
 
   updateGraphsWithState() {
     this.getStockData(this.state.tickerSymbol, this.state.dateRange);
-    this.getTrendData();
+    this.getTrendData(this.state.trendSearchTerm, this.state.dateRange);
   }
 
   resetFormFields() {
@@ -60,12 +60,14 @@ class App extends Component {
     this.updateGraphsWithState();
   }
 
-  getTrendData() {
+  getTrendData(trendSearchTerm, dateRange) {
     // Magic from 
     // https://tinyurl.com/nodewithreact
 
     const getData = async () => {
-      const response = await fetch('/api/hello');
+      const response = await fetch(
+        `/api/hello?searchTerm=${trendSearchTerm}&dateRange=${dateRange}`
+      );
       const body = await response.json();
       
       const parsedData = JSON.parse(body.results);
