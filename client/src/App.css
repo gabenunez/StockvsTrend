@@ -10,6 +10,11 @@ body {
     margin-bottom: 10px;
 }
 
+.graph-heading {
+    margin: 0;
+    padding-top: 10px;
+}
+
 .stock-color {
     color: #8884d8;
 }

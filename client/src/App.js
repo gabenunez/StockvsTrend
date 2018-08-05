@@ -151,7 +151,7 @@ class App extends Component {
           <div className="col-md-8 order-2">
             <div className='row'>
               <div className='col-md-12'>
-                <h3 className='text-center stock-color'>Stock {this.state.selectedTicker ?  `(${this.state.selectedTicker.toLocaleUpperCase()})` : ''}</h3>
+                <h3 className='text-center stock-color graph-heading'>Stock {this.state.selectedTicker ?  `(${this.state.selectedTicker.toLocaleUpperCase()})` : ''}</h3>
                 <Graph 
                   list={this.state.stockData} 
                   line_name='Stock'
@@ -164,7 +164,7 @@ class App extends Component {
 
             <div className='row'>
               <div className='col-md-12'>
-                <h3 className='text-center trend-color'>Trend {this.state.selectedTrend ?  `(${this.state.selectedTrend})` : ''}</h3>
+                <h3 className='text-center trend-color graph-heading'>Trend {this.state.selectedTrend ?  `(${this.state.selectedTrend})` : ''}</h3>
                 <Graph 
                   list={this.state.trendsData}
                   line_name='Google Trend'
