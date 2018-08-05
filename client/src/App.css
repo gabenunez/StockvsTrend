@@ -1,0 +1,19 @@
+body {
+    background-color: #424549;
+}
+
+.sidebar {
+    color: white;
+    background-color: #2e3135;
+    padding: 12px;
+    border-radius: 0 0 5px 5px;
+    margin-bottom: 10px;
+}
+
+.stock-color {
+    color: #8884d8;
+}
+
+.trend-color {
+    color: #f54336;
+}

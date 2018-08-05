@@ -11,9 +11,12 @@ class App extends Component {
     super(props);
 
     this.state = { 
-      stockData: null,
-      trendsData: null,
       tickerSymbol: 'AAPL',
+      selectedTicker: null,
+      stockData: null,
+
+      trendsData: null,
+      selectedTrend: null,
       trendSearchTerm: 'iPhones',
       dateRange: '1 Year'
     };
@@ -74,6 +77,10 @@ class App extends Component {
   
       if (response.status !== 200) throw Error(body.message);
   
+      this.setState({
+        selectedTrend: trendSearchTerm
+      });
+
       return parsedData.default.timelineData;
     };
 
@@ -114,7 +121,9 @@ class App extends Component {
     .then((response) => {
       const data = response.data;
 
+      console.log(data);
       this.setState({
+        selectedTicker: stockTicker,
         stockData: data
       });
 
@@ -125,10 +134,10 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container">
         <div className="row">
-          <div className='col-md-4 order-1'>
-            <h1 className='text-center'>Stocks vs Trends</h1>
+          <div className='col-md-4 order-1 sidebar'>
+            <h1 className='text-center'><span className='stock-color'>Stock</span> vs <span className='trend-color'>Trend</span></h1>
             <Form
               resetFormFields={this.resetFormFields}
               handleInputChange={this.handleInputChange}
@@ -142,18 +151,20 @@ class App extends Component {
           <div className="col-md-8 order-2">
             <div className='row'>
               <div className='col-md-12'>
+                <h3 className='text-center stock-color'>Stock {this.state.selectedTicker ?  `(${this.state.selectedTicker.toLocaleUpperCase()})` : ''}</h3>
                 <Graph 
                   list={this.state.stockData} 
                   line_name='Stock'
                   line_dataKey='close'
                   line_color='#8884d8'
-                  xAxis_dataKey='date'
+                  xAxis_dataKey='label'
                 />
               </div>
             </div>
 
             <div className='row'>
               <div className='col-md-12'>
+                <h3 className='text-center trend-color'>Trend {this.state.selectedTrend ?  `(${this.state.selectedTrend})` : ''}</h3>
                 <Graph 
                   list={this.state.trendsData}
                   line_name='Google Trend'

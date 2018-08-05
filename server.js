@@ -9,7 +9,7 @@ app.get('/api/hello', (req, res) => {
 
     const getTrendsData = (dateNumber, dateType) => {
         googleTrends.interestOverTime({
-            keyword: data.searchTerm, 
+            keyword: data.searchTerm,
             startTime: moment().subtract(dateNumber, dateType).toDate()
         })
         .then(function(results){
