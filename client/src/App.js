@@ -94,15 +94,6 @@ class App extends Component {
     let formatedTimeFrame = null;
 
     switch (timeFrame) {
-      case '1 Month':
-        formatedTimeFrame = '1m';
-        break;
-      case '3 Months':
-        formatedTimeFrame = '3m';
-        break;
-      case '6 Months':
-        formatedTimeFrame = '6m';
-        break;
       case '1 Year':
         formatedTimeFrame = '1y';
         break;
@@ -121,7 +112,6 @@ class App extends Component {
     .then((response) => {
       const data = response.data;
 
-      console.log(data);
       this.setState({
         selectedTicker: stockTicker,
         stockData: data

@@ -39,9 +39,6 @@ const Form = (props) => {
                     id='date-select'
                 >
                     <option>Select a date range</option>
-                    <option>1 Month</option>
-                    <option>3 Months</option>
-                    <option>6 Months</option>
                     <option>1 Year</option>
                     <option>2 Years</option>
                     <option>5 Years</option>

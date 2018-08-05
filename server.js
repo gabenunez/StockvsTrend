@@ -23,15 +23,6 @@ app.get('/api/hello', (req, res) => {
     const data = req.query;
 
     switch (data.dateRange) {
-        case '1 Month':
-            getTrendsData(1, 'm');
-            break;
-        case '3 Months':
-            getTrendsData(3, 'm');
-            break;
-        case '6 Months':
-            getTrendsData(6, 'm');
-            break;
         case '1 Year':
             getTrendsData(1, 'y');
             break;
