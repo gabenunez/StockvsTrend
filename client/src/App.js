@@ -14,11 +14,13 @@ class App extends Component {
       tickerSymbol: 'AAPL',
       selectedTicker: null,
       stockData: null,
+      stockIsInvalid: false,
 
       trendsData: null,
       selectedTrend: null,
       trendSearchTerm: 'iPhones',
-      dateRange: '1 Year'
+      dateRange: '1 Year',
+      trendIsInvalid: false
     };
 
     this.resetFormFields = this.resetFormFields.bind(this);
@@ -136,6 +138,9 @@ class App extends Component {
               tickerSymbol={this.state.tickerSymbol}
               trendSearchTerm={this.state.trendSearchTerm}
               dateRange={this.state.dateRange}
+              
+              stockIsInvalid={this.state.stockIsInvalid}
+              trendIsInvalid={this.state.trendIsInvalid}
             />
           </div>
           <div className="col-md-8 order-2">

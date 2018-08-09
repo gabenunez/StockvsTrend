@@ -22,3 +22,7 @@ body {
 .trend-color {
     color: #f54336;
 }
+
+.form-error {
+    color: #bd3e3e;
+}

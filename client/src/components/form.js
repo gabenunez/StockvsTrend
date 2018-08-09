@@ -13,6 +13,7 @@ const Form = (props) => {
                 className='form-control'
                 placeholder='i.e. AAPL' 
             />
+            <div div className='form-error'>{props.stockIsInvalid ? 'Sorry, that ticker doesn\'t exist.' : ''}</div>
             </div>
 
             <div className='form-group'>
@@ -25,6 +26,7 @@ const Form = (props) => {
                     className='form-control' 
                     placeholder='i.e. iPhones'
                 />
+                <div className='form-error'>{props.trendIsInvalid ? 'No trend data available for that term.' : ''}</div>
             </div>
 
             <div className='form-group'>
