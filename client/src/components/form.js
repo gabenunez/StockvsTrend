@@ -10,8 +10,7 @@ const Form = (props) => {
                 onChange={props.handleInputChange} 
                 type='text' 
                 name='tickerSymbol' 
-                className='form-control' 
-                id='stock' 
+                className='form-control'
                 placeholder='i.e. AAPL' 
             />
             </div>
@@ -24,7 +23,6 @@ const Form = (props) => {
                     type='text' 
                     name='trendSearchTerm' 
                     className='form-control' 
-                    id='trends' 
                     placeholder='i.e. iPhones'
                 />
             </div>
