@@ -14,13 +14,14 @@ class App extends Component {
       tickerSymbol: 'AAPL',
       selectedTicker: null,
       stockData: null,
+
       stockIsInvalid: false,
+      trendIsInvalid: false,
 
       trendsData: null,
       selectedTrend: null,
       trendSearchTerm: 'iPhones',
-      dateRange: '1 Year',
-      trendIsInvalid: false
+      dateRange: '1 Year'
     };
 
     this.resetFormFields = this.resetFormFields.bind(this);
@@ -147,26 +148,30 @@ class App extends Component {
             <div className='row'>
               <div className='col-md-12'>
                 <h3 className='text-center stock-color graph-heading'>Stock {this.state.selectedTicker ?  `(${this.state.selectedTicker.toLocaleUpperCase()})` : ''}</h3>
-                <Graph 
-                  list={this.state.stockData} 
-                  line_name='Stock'
-                  line_dataKey='close'
-                  line_color='#8884d8'
-                  xAxis_dataKey='label'
-                />
+                <div className='graph-div'>
+                  <Graph 
+                    list={this.state.stockData} 
+                    line_name='Stock'
+                    line_dataKey='close'
+                    line_color='#8884d8'
+                    xAxis_dataKey='label'
+                  />
+                </div>
               </div>
             </div>
 
             <div className='row'>
               <div className='col-md-12'>
                 <h3 className='text-center trend-color graph-heading'>Trend {this.state.selectedTrend ?  `(${this.state.selectedTrend})` : ''}</h3>
-                <Graph 
-                  list={this.state.trendsData}
-                  line_name='Google Trend'
-                  line_dataKey='value'
-                  line_color='#f54336'
-                  xAxis_dataKey='formattedTime'
-                />
+                <div className='graph-div'>
+                  <Graph 
+                    list={this.state.trendsData}
+                    line_name='Google Trend'
+                    line_dataKey='value'
+                    line_color='#f54336'
+                    xAxis_dataKey='formattedTime'
+                  />
+                </div>
               </div>
             </div>
           </div>

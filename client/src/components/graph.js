@@ -1,14 +1,26 @@
 import React from 'react';
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { 
+    ResponsiveContainer, 
+    LineChart, 
+    Line, 
+    XAxis,
+    YAxis,
+    CartesianGrid, 
+    Tooltip
+} from 'recharts';
 
 const Graph = (props) => {
 
     if(!props.list) {
-        return <div>Loading...</div>;
+        return ( 
+            <div className="cssload-container">
+                <div className="cssload-loading"><i></i><i></i></div>
+            </div>
+        );
     }
 
     return (
-        <ResponsiveContainer width='100%' height={250}>
+        <ResponsiveContainer width='100%' height='100%'>
             <LineChart 
                 data={props.list}
                 margin={{top: 10, left: -20}}>
