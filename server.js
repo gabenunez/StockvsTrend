@@ -5,7 +5,7 @@ const moment = require('moment');
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.get('/api/hello', (req, res) => {
+app.get('/api/googletrends', (req, res) => {
 
     const getTrendsData = (dateNumber, dateType) => {
         googleTrends.interestOverTime({

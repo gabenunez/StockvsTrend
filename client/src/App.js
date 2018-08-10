@@ -72,7 +72,7 @@ class App extends Component {
 
     const getData = async () => {
       const response = await fetch(
-        `/api/hello?searchTerm=${trendSearchTerm}&dateRange=${dateRange}`
+        `/api/googletrends?searchTerm=${trendSearchTerm}&dateRange=${dateRange}`
       );
       const body = await response.json();
       
