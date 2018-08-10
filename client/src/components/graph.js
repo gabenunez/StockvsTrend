@@ -12,6 +12,7 @@ import {
 const Graph = (props) => {
 
     if(!props.list) {
+        // If no data is available, show css loader.
         return ( 
             <div className="cssload-container">
                 <div className="cssload-loading"><i></i><i></i></div>
