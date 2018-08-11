@@ -11,7 +11,8 @@ const Form = (props) => {
                 type='text' 
                 name='tickerSymbol' 
                 className='form-control'
-                placeholder='i.e. AAPL' 
+                placeholder='i.e. AAPL'
+                maxLength='5'
             />
             <div className='form-error'>{props.stockIsInvalid ? 'Sorry, that ticker doesn\'t exist.' : null}</div>
             </div>
