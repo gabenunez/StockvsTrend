@@ -11,15 +11,6 @@ import {
 
 const Graph = (props) => {
 
-    if(!props.list) {
-        // If no data is available, show css loader.
-        return ( 
-            <div className="cssload-container">
-                <div className="cssload-loading"><i></i><i></i></div>
-            </div>
-        );
-    }
-
     if(props.stockIsInvalid || props.trendIsInvalid) {
         return (
             <div className='graph-error'>
@@ -27,6 +18,15 @@ const Graph = (props) => {
                     {props.stockIsInvalid ? 'Invalid Stock Ticker' : ''}
                     {props.trendIsInvalid ? 'No Data Available' : ''}
                 </h4>
+            </div>
+        );
+    }
+
+    if(!props.list) {
+        // If no data is available, show css loader.
+        return ( 
+            <div className="cssload-container">
+                <div className="cssload-loading"><i></i><i></i></div>
             </div>
         );
     }

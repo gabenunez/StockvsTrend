@@ -26,7 +26,7 @@ const Form = (props) => {
                     className='form-control' 
                     placeholder='i.e. iPhones'
                 />
-                <div className='form-error'>{props.trendIsInvalid ? 'No trend data available for that term.' : ''}</div>
+                <div className='form-error'>{props.trendIsInvalid ? 'Sorry, there\'s no data available.' : ''}</div>
             </div>
 
             <div className='form-group'>

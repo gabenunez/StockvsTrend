@@ -45,9 +45,9 @@ class App extends Component {
 
   resetFormFields() {
     this.setState({
-        tickerSymbol: 'AAPL',
-        trendSearchTerm: 'iPhones',
-        dateRange: '1 Year'
+        tickerSymbol: 'WATT',
+        trendSearchTerm: 'Energous',
+        dateRange: '5 Years'
     });
   }
 
@@ -83,7 +83,8 @@ class App extends Component {
       // Checks if entered term isn't empty
       if (trendTerm.length < 1) {
         this.setState({
-          trendIsInvalid: true
+          trendIsInvalid: true,
+          trendsData: null
         });
 
         return;
@@ -103,7 +104,8 @@ class App extends Component {
       if (trendsData.length < 1) {
         this.setState({
           trendIsInvalid: true,
-          selectedTrend: trendTerm
+          selectedTrend: trendTerm,
+          trendsData: null
         });
 
         return;
@@ -120,6 +122,11 @@ class App extends Component {
   }
 
   getStockData(stockTicker, timeFrame) {
+
+    this.setState({
+      stockIsInvalid: false
+    });
+
     // Get stock data from the remote api and set that as state.
     let formatedTimeFrame = null;
 
@@ -148,7 +155,15 @@ class App extends Component {
       });
 
     }).catch((error) => {
-      console.log(error);
+      if (error.response.status === 404) {
+        this.setState({
+          selectedTicker: stockTicker,
+          stockIsInvalid: true,
+          stockData: null
+        });
+      } else {
+        console.log(error);
+      }
     });
   }
 
