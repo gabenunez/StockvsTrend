@@ -11,7 +11,7 @@ class App extends Component {
     super(props);
 
     this.state = { 
-      tickerSymbol: 'AAPL',
+      tickerSymbol: 'WATT',
       selectedTicker: null,
       stockData: null,
 
@@ -20,8 +20,8 @@ class App extends Component {
 
       trendsData: null,
       selectedTrend: null,
-      trendSearchTerm: 'iPhones',
-      dateRange: '1 Year'
+      trendSearchTerm: 'Energous',
+      dateRange: '5 Years'
     };
 
     this.resetFormFields = this.resetFormFields.bind(this);
