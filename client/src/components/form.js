@@ -17,7 +17,7 @@ const Form = (props) => {
             </div>
 
             <div className='form-group'>
-                <label htmlFor='trends'>Google Trends Search Term:</label>
+                <label htmlFor='trends'>Google Trends Search:</label>
                 <input
                     value={props.trendSearchTerm} 
                     onChange={props.handleInputChange}
