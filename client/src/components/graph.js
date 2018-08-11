@@ -18,6 +18,10 @@ const Graph = (props) => {
                     {props.stockIsInvalid ? 'Invalid Stock Ticker' : ''}
                     {props.trendIsInvalid ? 'No Data Available' : ''}
                 </h4>
+                <h5>
+                    {props.stockIsInvalid ? 'Perhaps you mistyped it?' : ''}
+                    {props.trendIsInvalid ? 'Maybe shorten your search phrase?' : ''}
+                </h5>
             </div>
         );
     }

@@ -47,6 +47,11 @@ body {
     border-radius: 3px;
 }
 
+.graph-div > .graph-error > h5 {
+	color: white;
+	font-weight: 300;
+}
+
 /*  
     CSS Spinner
     https://icons8.com/cssload/en/spinners/7
