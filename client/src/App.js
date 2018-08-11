@@ -71,25 +71,52 @@ class App extends Component {
     // https://tinyurl.com/nodewithreact
 
     const getData = async () => {
-      const response = await fetch(
-        `/api/googletrends?searchTerm=${trendSearchTerm}&dateRange=${dateRange}`
-      );
-      const body = await response.json();
       
-      const parsedData = JSON.parse(body.results);
-  
-      if (response.status !== 200) throw Error(body.message);
-  
-      this.setState({
-        selectedTrend: trendSearchTerm
-      });
+      // Trim whitespace from both sides of search term
+      const trendTerm = trendSearchTerm.trim();
 
-      return parsedData.default.timelineData;
+      // Auto-magically set trendInvalid to false
+      this.setState({
+        trendIsInvalid: false
+      });
+    
+      // Checks if entered term isn't empty
+      if (trendTerm.length < 1) {
+        this.setState({
+          trendIsInvalid: true
+        });
+
+        return;
+      }
+
+      const response = await fetch(
+        `/api/googletrends?searchTerm=${trendTerm}&dateRange=${dateRange}`
+      );
+
+      const body = await response.json();
+      const parsedData = JSON.parse(body.results);
+      const trendsData = parsedData.default.timelineData;
+
+      if (response.status !== 200) throw Error(body.message);
+
+      // Check we get a response back with data
+      if (trendsData.length < 1) {
+        this.setState({
+          trendIsInvalid: true,
+          selectedTrend: trendTerm
+        });
+
+        return;
+      }
+
+      // Set state of trends if all checks pass!
+      this.setState({ 
+        trendsData: trendsData,
+        selectedTrend: trendTerm
+      })
     };
 
-    getData()
-      .then(trendsData => this.setState({ trendsData }))
-      .catch(err => console.log(err));
+    getData();
   }
 
   getStockData(stockTicker, timeFrame) {
@@ -155,6 +182,7 @@ class App extends Component {
                     line_dataKey='close'
                     line_color='#8884d8'
                     xAxis_dataKey='label'
+                    stockIsInvalid={this.state.stockIsInvalid}
                   />
                 </div>
               </div>
@@ -162,7 +190,7 @@ class App extends Component {
 
             <div className='row'>
               <div className='col-md-12'>
-                <h3 className='text-center trend-color graph-heading'>Trend {this.state.selectedTrend ?  `(${this.state.selectedTrend})` : ''}</h3>
+                <h3 className='text-center trend-color graph-heading'>Trend {this.state.selectedTrend || this.state.trendIsInvalid ?  `(${this.state.selectedTrend})` : ''}</h3>
                 <div className='graph-div'>
                   <Graph 
                     list={this.state.trendsData}
@@ -170,6 +198,7 @@ class App extends Component {
                     line_dataKey='value'
                     line_color='#f54336'
                     xAxis_dataKey='formattedTime'
+                    trendIsInvalid={this.state.trendIsInvalid}
                   />
                 </div>
               </div>

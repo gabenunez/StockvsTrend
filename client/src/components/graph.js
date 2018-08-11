@@ -20,6 +20,17 @@ const Graph = (props) => {
         );
     }
 
+    if(props.stockIsInvalid || props.trendIsInvalid) {
+        return (
+            <div className='graph-error'>
+                <h4>
+                    {props.stockIsInvalid ? 'Invalid Stock Ticker' : ''}
+                    {props.trendIsInvalid ? 'No Data Available' : ''}
+                </h4>
+            </div>
+        );
+    }
+
     return (
         <ResponsiveContainer width='100%' height='100%'>
             <LineChart 

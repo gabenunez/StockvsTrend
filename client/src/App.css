@@ -28,9 +28,23 @@ body {
 }
 
 .graph-div {
-    height: 250px;
+    height: 225px;
     display: flex;
     align-items: center;
+}
+
+.graph-div > .graph-error {
+	width: 100%;
+	text-align: center;
+	align-items: center;
+}
+
+.graph-div > .graph-error > h4 {
+	color: white;
+    border: solid 1px;
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 3px;
 }
 
 /*  
