@@ -1,12 +1,23 @@
-body {
-    background-color: #424549;
+.vertical-center {
+	min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+	min-height: 100vh; /* These two lines are counted as one :-)       */
+
+	display: flex;
+	align-items: center;
+}
+
+.jumbotron {
+	padding: 5px;
+	margin: 0;
+	background-color: #424549;
+	border-radius: none;
 }
 
 .sidebar {
     color: white;
     background-color: #2e3135;
     padding: 12px;
-    border-radius: 0 0 5px 5px;
+    border-radius: 5px;
     margin-bottom: 10px;
 }
 

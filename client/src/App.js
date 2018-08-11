@@ -169,57 +169,59 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className='col-md-4 order-1 sidebar'>
-            <h1 className='text-center'><span className='stock-color'>Stock</span> vs <span className='trend-color'>Trend</span></h1>
-            <Form
-              resetFormFields={this.resetFormFields}
-              handleInputChange={this.handleInputChange}
-              handleOnSubmit={this.handleOnSubmit}
+      <div className="jumbotron vertical-center">
+        <div className="container">
+          <div className="row">
+            <div className='col-md-4 order-1 sidebar'>
+              <h1 className='text-center'><span className='stock-color'>Stock</span> vs <span className='trend-color'>Trend</span></h1>
+              <Form
+                resetFormFields={this.resetFormFields}
+                handleInputChange={this.handleInputChange}
+                handleOnSubmit={this.handleOnSubmit}
 
-              tickerSymbol={this.state.tickerSymbol}
-              trendSearchTerm={this.state.trendSearchTerm}
-              dateRange={this.state.dateRange}
-              
-              stockIsInvalid={this.state.stockIsInvalid}
-              trendIsInvalid={this.state.trendIsInvalid}
-            />
-          </div>
-          <div className="col-md-8 order-2">
-            <div className='row'>
-              <div className='col-md-12'>
-                <h3 className='text-center stock-color graph-heading'>Stock {this.state.selectedTicker ?  `(${this.state.selectedTicker.toLocaleUpperCase()})` : ''}</h3>
-                <div className='graph-div'>
-                  <Graph 
-                    list={this.state.stockData} 
-                    line_name='Stock'
-                    line_dataKey='close'
-                    line_color='#8884d8'
-                    xAxis_dataKey='label'
-                    stockIsInvalid={this.state.stockIsInvalid}
-                  />
+                tickerSymbol={this.state.tickerSymbol}
+                trendSearchTerm={this.state.trendSearchTerm}
+                dateRange={this.state.dateRange}
+                
+                stockIsInvalid={this.state.stockIsInvalid}
+                trendIsInvalid={this.state.trendIsInvalid}
+              />
+            </div>
+            <div className="col-md-8 order-2">
+              <div className='row'>
+                <div className='col-md-12'>
+                  <h3 className='text-center stock-color graph-heading'>Stock {this.state.selectedTicker ?  `(${this.state.selectedTicker.toLocaleUpperCase()})` : ''}</h3>
+                  <div className='graph-div'>
+                    <Graph 
+                      list={this.state.stockData} 
+                      line_name='Stock'
+                      line_dataKey='close'
+                      line_color='#8884d8'
+                      xAxis_dataKey='label'
+                      stockIsInvalid={this.state.stockIsInvalid}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className='row'>
+                <div className='col-md-12'>
+                  <h3 className='text-center trend-color graph-heading'>Trend {this.state.selectedTrend || this.state.trendIsInvalid ?  `(${this.state.selectedTrend})` : ''}</h3>
+                  <div className='graph-div'>
+                    <Graph 
+                      list={this.state.trendsData}
+                      line_name='Google Trend'
+                      line_dataKey='value'
+                      line_color='#f54336'
+                      xAxis_dataKey='formattedTime'
+                      trendIsInvalid={this.state.trendIsInvalid}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className='row'>
-              <div className='col-md-12'>
-                <h3 className='text-center trend-color graph-heading'>Trend {this.state.selectedTrend || this.state.trendIsInvalid ?  `(${this.state.selectedTrend})` : ''}</h3>
-                <div className='graph-div'>
-                  <Graph 
-                    list={this.state.trendsData}
-                    line_name='Google Trend'
-                    line_dataKey='value'
-                    line_color='#f54336'
-                    xAxis_dataKey='formattedTime'
-                    trendIsInvalid={this.state.trendIsInvalid}
-                  />
-                </div>
-              </div>
-            </div>
           </div>
-
         </div>
       </div>
     );
