@@ -66,70 +66,86 @@ class App extends Component {
     this.updateGraphsWithState();
   }
 
-  getTrendData(trendSearchTerm, dateRange) {
+  async fetchData(apiEndpoint, apiParams) {
+
+    let urlParms = '';
+    Object.keys(apiParams).forEach(key => {
+      urlParms += `${key}=${apiParams[key]}&`
+    });
+
+    const response = await fetch(
+      `/api/${apiEndpoint}?${urlParms}`
+    );
+
+    const body = await response.json();
+
+    if (response.status !== 200) throw Error(body.message);
+
+    const parsedData = JSON.parse(body.results);
+
+    return parsedData;
+  }
+
+  async getTrendData(trendSearchTerm, dateRange) {
     // Magic from 
     // https://tinyurl.com/nodewithreact
 
-    const getData = async () => {
-      
-      // Trim whitespace from both sides of search term
-      const trendTerm = trendSearchTerm.trim();
+    // Trim whitespace from both sides of search term
+    const trendTerm = trendSearchTerm.trim();
 
-      // Auto-magically set trendInvalid to false
+    // Auto-magically set trendInvalid to false
+    this.setState({
+      trendIsInvalid: false
+    });
+  
+    // Checks if entered term isn't empty
+    if (trendTerm.length < 1) {
       this.setState({
-        trendIsInvalid: false
+        trendIsInvalid: true,
+        trendsData: null
       });
+
+      return;
+    }
+
+    // Check if trend is already selected, then sets null (for loading effect)
+    if (trendTerm !== this.state.selectedTrend) {
+      this.setState({
+        trendsData: null,
+        selectedTrend: null
+      });
+    }
+
+    let trendsData = await this.fetchData('googletrends', 
+      {
+        dateRange: dateRange,
+        searchTerm: trendTerm
+      }
+    );
     
-      // Checks if entered term isn't empty
-      if (trendTerm.length < 1) {
-        this.setState({
-          trendIsInvalid: true,
-          trendsData: null
-        });
+    trendsData = trendsData.default.timelineData;
 
-        return;
-      }
+    // Check we get a response back with data
+    if (trendsData.length < 1) {
+      this.setState({
+        trendIsInvalid: true,
+        selectedTrend: trendTerm,
+        trendsData: null
+      });
 
-      // Check if trend is already selected, then sets null (for loading effect)
-      if (trendTerm !== this.state.selectedTrend) {
-        this.setState({
-          trendsData: null,
-          selectedTrend: null
-        });
-      }
+      return;
+    }
 
-      const response = await fetch(
-        `/api/googletrends?searchTerm=${trendTerm}&dateRange=${dateRange}`
-      );
-
-      const body = await response.json();
-      const parsedData = JSON.parse(body.results);
-      const trendsData = parsedData.default.timelineData;
-
-      if (response.status !== 200) throw Error(body.message);
-
-      // Check we get a response back with data
-      if (trendsData.length < 1) {
-        this.setState({
-          trendIsInvalid: true,
-          selectedTrend: trendTerm,
-          trendsData: null
-        });
-
-        return;
-      }
-
-      // Set state of trends if all checks pass!
-      this.setState({ 
-        trendsData: trendsData,
-        selectedTrend: trendTerm
-      })
-    };
-
-    getData();
+    // Set state of trends if all checks pass!
+    this.setState({ 
+      trendsData: trendsData,
+      selectedTrend: trendTerm
+    });
   }
 
-  getStockData(stockTicker, timeFrame) {
+  getStockData(ticker, timeFrame) {
+
+    const stockTicker = ticker.trim();
 
     this.setState({
       stockIsInvalid: false
