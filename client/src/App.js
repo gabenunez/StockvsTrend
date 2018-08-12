@@ -145,6 +145,15 @@ class App extends Component {
         break;
     }
 
+    // Check stock ticker entry isn't empty
+    if(stockTicker < 1) {
+      this.setState({
+        selectedTicker: stockTicker,
+        stockIsInvalid: true,
+        stockData: null
+      });
+    }
+
     axios.get(`https://api.iextrading.com/1.0/stock/${stockTicker}/chart/${formatedTimeFrame}`)
     .then((response) => {
       const data = response.data;
