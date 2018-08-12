@@ -90,6 +90,14 @@ class App extends Component {
         return;
       }
 
+      // Check if trend is already selected, then sets null (for loading effect)
+      if (trendTerm !== this.state.selectedTrend) {
+        this.setState({
+          trendsData: null,
+          selectedTrend: null
+        });
+      }
+
       const response = await fetch(
         `/api/googletrends?searchTerm=${trendTerm}&dateRange=${dateRange}`
       );
@@ -151,6 +159,16 @@ class App extends Component {
         selectedTicker: stockTicker,
         stockIsInvalid: true,
         stockData: null
+      });
+
+      return;
+    }
+
+    // If ticker isn't the same, set stockData to null (for loading effect)
+    if(stockTicker !== this.state.selectedTicker) {
+      this.setState({
+        stockData: null,
+        selectedTicker: null
       });
     }
 
@@ -215,7 +233,7 @@ class App extends Component {
 
               <div className='row'>
                 <div className='col-md-12'>
-                  <h3 className='text-center trend-color graph-heading'>Trend {this.state.selectedTrend || this.state.trendIsInvalid ?  `(${this.state.selectedTrend})` : ''}</h3>
+                  <h3 className='text-center trend-color graph-heading'>Trend {this.state.selectedTrend || this.state.trendIsInvalid ? `(${this.state.selectedTrend})` : ''}</h3>
                   <div className='graph-div'>
                     <Graph 
                       list={this.state.trendsData}
