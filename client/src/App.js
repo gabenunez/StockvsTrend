@@ -151,9 +151,7 @@ class App extends Component {
       stockIsInvalid: false
     });
 
-    // Get stock data from the remote api and set that as state.
-    let formatedTimeFrame = null;
-
+    let formatedTimeFrame;
     switch (timeFrame) {
       case '1 Year':
         formatedTimeFrame = '1y';
