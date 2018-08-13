@@ -21,9 +21,14 @@
     margin-bottom: 10px;
 }
 
+.graph-container {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
 .graph-heading {
     margin: 0;
-    padding-top: 10px;
+    padding-top: 0;
 }
 
 .stock-color {

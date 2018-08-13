@@ -228,7 +228,7 @@ class App extends Component {
                 trendIsInvalid={this.state.trendIsInvalid}
               />
             </div>
-            <div className="col-md-8 order-2">
+            <div className="col-md-8 order-2 graph-container">
               <div className='row'>
                 <div className='col-md-12'>
                   <h3 className='text-center stock-color graph-heading'>Stock {this.state.selectedTicker ?  `(${this.state.selectedTicker.toLocaleUpperCase()})` : ''}</h3>
