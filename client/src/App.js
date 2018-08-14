@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Graph from './components/graph';
 import Form from './components/form';
 
-import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
@@ -84,11 +83,11 @@ class App extends Component {
 
     const body = await response.json();
 
+    console.log(body);
+
     if (response.status !== 200) throw Error(body.message);
 
-    const parsedData = JSON.parse(body.results);
-
-    return parsedData;
+    return body;
   }
 
   async getTrendData(trendSearchTerm, dateRange) {
@@ -96,7 +95,7 @@ class App extends Component {
     // https://tinyurl.com/nodewithreact
 
     // Trim whitespace from both sides of search term
-    const trendTerm = trendSearchTerm.trim();
+    const searchTerm = trendSearchTerm.trim();
 
     // Auto-magically set trendInvalid to false
     this.setState({
@@ -104,7 +103,7 @@ class App extends Component {
     });
   
     // Checks if entered term isn't empty
-    if (trendTerm.length < 1) {
+    if (searchTerm.length < 1) {
       this.setState({
         trendIsInvalid: true,
         trendsData: null
@@ -114,27 +113,32 @@ class App extends Component {
     }
 
     // Check if trend is already selected, then sets null (for loading effect)
-    if (trendTerm !== this.state.selectedTrend) {
+    if (searchTerm !== this.state.selectedTrend) {
       this.setState({
         trendsData: null,
         selectedTrend: null
       });
     }
 
+    // Get dat data from Google Trends!
     let trendsData = await this.fetchData('googletrends', 
       {
-        dateRange: dateRange,
-        searchTerm: trendTerm
+        dateRange,
+        searchTerm
       }
     );
-    
+
+    // Parse this JSON to an object
+    trendsData = JSON.parse(trendsData.results);
+
+    // Just one more extra step to get the timeline data!
     trendsData = trendsData.default.timelineData;
 
     // Check we get a response back with data
     if (trendsData.length < 1) {
       this.setState({
         trendIsInvalid: true,
-        selectedTrend: trendTerm,
+        selectedTrend: searchTerm,
         trendsData: null
       });
 
@@ -144,33 +148,16 @@ class App extends Component {
     // Set state of trends if all checks pass!
     this.setState({ 
       trendsData: trendsData,
-      selectedTrend: trendTerm
+      selectedTrend: searchTerm
     });
   }
 
-  getStockData(ticker, timeFrame) {
-
-    const stockTicker = ticker.trim();
+  async getStockData(tickerSymbol, dateRange) {
+    const stockTicker = tickerSymbol.trim();
 
     this.setState({
       stockIsInvalid: false
     });
-
-    let formatedTimeFrame;
-    switch (timeFrame) {
-      case '1 Year':
-        formatedTimeFrame = '1y';
-        break;
-      case '2 Years':
-        formatedTimeFrame = '2y';
-        break;
-      case '5 Years':
-        formatedTimeFrame = '5y';
-        break;
-      default:
-        console.log('Error with timeframe selection.')
-        break;
-    }
 
     // Check stock ticker entry isn't empty
     if(stockTicker < 1) {
@@ -191,26 +178,29 @@ class App extends Component {
       });
     }
 
-    axios.get(`https://api.iextrading.com/1.0/stock/${stockTicker}/chart/${formatedTimeFrame}`)
-    .then((response) => {
-      const data = response.data;
+    // Fetch stock data!
+    const data = await this.fetchData('stocks', {
+      tickerSymbol,
+      dateRange
+    });
 
+    // If returned array has nothing (404), create error.
+    if(data.length < 1) {
       this.setState({
         selectedTicker: stockTicker,
-        stockData: data
+        stockIsInvalid: true,
+        stockData: null
       });
 
-    }).catch((error) => {
-      if (error.response.status === 404) {
-        this.setState({
-          selectedTicker: stockTicker,
-          stockIsInvalid: true,
-          stockData: null
-        });
-      } else {
-        console.log(error);
-      }
+      return;
+    }
+
+    // Set stock state after all above checks.
+    this.setState({
+      selectedTicker: stockTicker,
+      stockData: data
     });
+
   }
 
   render() {
