@@ -20,7 +20,10 @@ class App extends Component {
       trendsData: null,
       selectedTrend: null,
       trendSearchTerm: 'Energous',
-      dateRange: '5 Years'
+      dateRange: '5 Years',
+
+      stockApiError: '',
+      trendApiError: ''
     };
 
     this.resetFormFields = this.resetFormFields.bind(this);
@@ -81,12 +84,18 @@ class App extends Component {
       `/api/${apiEndpoint}?${urlParms}`
     );
 
-    const body = await response.json();
-
-    console.log(body);
-
-    if (response.status !== 200) throw Error(body.message);
-
+    let body;
+    if (response.status !== 200) {
+      const errorMsg = 'Unable to connect to API server.';
+      this.setState({
+        stockApiError: errorMsg,
+        trendApiError: errorMsg
+      });
+      body = null;
+    } else {
+      body = await response.json();
+    }
+    
     return body;
   }
 
@@ -99,7 +108,8 @@ class App extends Component {
 
     // Auto-magically set trendInvalid to false
     this.setState({
-      trendIsInvalid: false
+      trendIsInvalid: false,
+      trendApiError: ''
     });
   
     // Checks if entered term isn't empty
@@ -127,6 +137,11 @@ class App extends Component {
         searchTerm
       }
     );
+
+    // Check we actually get some data
+    if(!trendsData) {
+      return;
+    }
 
     // Parse this JSON to an object
     trendsData = JSON.parse(trendsData.results);
@@ -156,7 +171,8 @@ class App extends Component {
     const stockTicker = tickerSymbol.trim();
 
     this.setState({
-      stockIsInvalid: false
+      stockIsInvalid: false,
+      stockApiError: ''
     });
 
     // Check stock ticker entry isn't empty
@@ -183,6 +199,22 @@ class App extends Component {
       tickerSymbol,
       dateRange
     });
+
+    // Check if any data is recieved to begin with
+    if(!data) {
+      return;
+    }
+
+    // Check for external server error.
+    if(data.error) {
+      this.setState({
+        stockApiError: data.error,
+        selectedTicker: stockTicker,
+        stockData: null
+      })
+
+      return;
+    }
 
     // If returned array has nothing (404), create error.
     if(data.length < 1) {
@@ -235,6 +267,7 @@ class App extends Component {
                       line_color='#8884d8'
                       xAxis_dataKey='label'
                       stockIsInvalid={this.state.stockIsInvalid}
+                      stockApiError={this.state.stockApiError}
                     />
                   </div>
                 </div>
@@ -251,6 +284,7 @@ class App extends Component {
                       line_color='#f54336'
                       xAxis_dataKey='formattedTime'
                       trendIsInvalid={this.state.trendIsInvalid}
+                      trendApiError={this.state.trendApiError}
                     />
                   </div>
                 </div>

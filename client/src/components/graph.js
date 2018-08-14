@@ -11,16 +11,18 @@ import {
 
 const Graph = (props) => {
 
-    if(props.stockIsInvalid || props.trendIsInvalid) {
+    if(props.stockIsInvalid || props.trendIsInvalid || props.trendApiError || props.stockApiError) {
         return (
             <div className='graph-error'>
                 <h4>
                     {props.stockIsInvalid ? 'Invalid Stock Ticker' : ''}
                     {props.trendIsInvalid ? 'No Data Available' : ''}
+                    {props.trendApiError || props.stockApiError ? 'Error' : ''}
                 </h4>
                 <h5>
                     {props.stockIsInvalid ? 'Perhaps you mistyped it?' : ''}
                     {props.trendIsInvalid ? 'Maybe shorten your search phrase?' : ''}
+                    {props.trendApiError || props.stockApiError ? props.trendApiError || props.stockApiError : ''}
                 </h5>
             </div>
         );

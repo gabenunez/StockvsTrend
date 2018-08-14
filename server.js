@@ -19,8 +19,9 @@ app.get('/api/googletrends', (req, res) => {
         .then(function(results){
             res.send({results});
         })
-        .catch(function(err){
-            console.error('Oh no there was an error', err);
+        .catch(function(error){
+            console.log(error.message);
+            res.send({error: 'Unable to get data from Google Trends.'});
         });
     }
 
@@ -53,7 +54,7 @@ app.get('/api/stocks', (req, res) => {
                 res.send([]);
             } else {
                 console.log(error.message);
-                res.send({error: error.message});
+                res.send({error: 'Unable to get data from Stocks API.'});
             }
         });
     }
