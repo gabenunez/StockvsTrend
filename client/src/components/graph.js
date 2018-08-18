@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatMoney } from 'accounting';
 import { 
     ResponsiveContainer, 
     LineChart, 
@@ -37,11 +38,29 @@ const Graph = (props) => {
         );
     }
 
+    const format_graph_data = (graphData) => {
+        
+        let formattedGraphData = graphData;
+
+        switch( props.line_name ) {
+            case 'Stock':
+                formattedGraphData = formatMoney(graphData);
+                break;
+            case 'Google Trend':
+                formattedGraphData = `${graphData}%`;
+                break;
+            default:
+                break;
+        }
+
+        return formattedGraphData;
+    }
+
     return (
         <ResponsiveContainer width='100%' height='100%'>
             <LineChart 
                 data={props.list}
-                margin={{top: 10, left: -20}}>
+                margin={{top: 10, left: 14, right: 14}}>
             >
                 <XAxis 
                     dataKey={props.xAxis_dataKey}
@@ -49,9 +68,10 @@ const Graph = (props) => {
                 />
                 <YAxis
                     tick={{fontSize: 14}}
+                    tickFormatter={tick => format_graph_data(tick)}
                 />
                 <CartesianGrid strokeDasharray='6 6'/>
-                <Tooltip/>
+                <Tooltip formatter={value => format_graph_data(value)} />>
                 <Line
                     name={props.line_name}
                     type='monotone'

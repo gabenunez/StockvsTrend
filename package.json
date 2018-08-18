@@ -1,5 +1,5 @@
 {
-  "name": "example-create-react-app-express",
+  "name": "stockvstrend",
   "version": "1.0.0",
   "scripts": {
     "client": "cd client && yarn start",
