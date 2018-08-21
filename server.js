@@ -8,7 +8,6 @@ const path = require('path');
 
 const port = process.env.PORT || 5000;
 
-
 app.get('/api/googletrends', (req, res) => {
 
     const data = req.query;
