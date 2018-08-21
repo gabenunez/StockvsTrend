@@ -6,7 +6,6 @@ import {
     Line, 
     XAxis,
     YAxis,
-    CartesianGrid, 
     Tooltip
 } from 'recharts';
 
@@ -68,9 +67,8 @@ const Graph = (props) => {
                 />
                 <YAxis
                     tick={{fontSize: 14}}
-                    tickFormatter={tick => format_graph_data(tick)}
+                    tickFormatter={value => format_graph_data(value)}
                 />
-                <CartesianGrid strokeDasharray='6 6'/>
                 <Tooltip formatter={value => format_graph_data(value)} />>
                 <Line
                     name={props.line_name}
