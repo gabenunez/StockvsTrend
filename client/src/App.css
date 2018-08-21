@@ -13,6 +13,10 @@ div.jumbotron {
 	border-radius: 0;
 }
 
+form {
+	margin: 30px 0px;
+}
+
 .sidebar {
     color: white;
     background-color: #2e3135;
@@ -79,11 +83,12 @@ div.jumbotron {
 .sidebar > .open-source {
 	font-size: 14px;
     text-align: center;
-    padding-bottom: 20px;
 }
 
-.sidebar > .disclaimer {
-	margin-top: 25px;
+.disclaimer {
+	font-size: 12px;
+	color: #929292;
+	margin-bottom: 0;
 }
 
 /*  

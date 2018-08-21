@@ -256,7 +256,7 @@ class App extends Component {
                 trendIsInvalid={this.state.trendIsInvalid}
               />
 
-              <p className='disclaimer'>Disclaimer: I am not liable for any losses associated with the use of this tool.</p>
+              <p className='text-center feedback'><a href="https://github.com/gabenunez/StockvsTrend/issues">Feedback? We're all ears.</a></p>
             </div>
             <div className="col-md-8 order-2 graph-container">
               <div className='row'>
@@ -290,8 +290,9 @@ class App extends Component {
                       trendApiError={this.state.trendApiError}
                     />
                   </div>
+                  <p className='text-center disclaimer'>Disclaimer: We are not liable for any losses associated with the use of this tool.</p>
                 </div>
-              </div>
+                </div>
             </div>
 
           </div>
