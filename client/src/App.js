@@ -242,6 +242,7 @@ class App extends Component {
           <div className="row">
             <div className='col-md-4 order-1 sidebar'>
               <h1 className='text-center'><span className='stock-color'>Stock</span> vs <span className='trend-color'>Trend</span></h1>
+              <p className='open-source'><a href="https://github.com/gabenunez/StockvsTrend/..">An Open Source Project</a> by <a href="https://github.com/gabenunez/">Gabe Nunez</a></p>
               <Form
                 resetFormFields={this.resetFormFields}
                 handleInputChange={this.handleInputChange}
