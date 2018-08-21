@@ -255,6 +255,8 @@ class App extends Component {
                 stockIsInvalid={this.state.stockIsInvalid}
                 trendIsInvalid={this.state.trendIsInvalid}
               />
+
+              <p className='disclaimer'>Disclaimer: I am not liable for any losses associated with the use of this tool.</p>
             </div>
             <div className="col-md-8 order-2 graph-container">
               <div className='row'>

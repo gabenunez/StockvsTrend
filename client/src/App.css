@@ -82,6 +82,10 @@ div.jumbotron {
     padding-bottom: 20px;
 }
 
+.sidebar > .disclaimer {
+	margin-top: 25px;
+}
+
 /*  
     CSS Spinner
     https://icons8.com/cssload/en/spinners/7
