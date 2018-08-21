@@ -20,7 +20,7 @@ class App extends Component {
       trendsData: null,
       selectedTrend: null,
       trendSearchTerm: 'Energous',
-      dateRange: '5 Years',
+      dateRange: '2 Years',
 
       stockApiError: '',
       trendApiError: ''
@@ -49,7 +49,7 @@ class App extends Component {
     this.setState({
         tickerSymbol: 'WATT',
         trendSearchTerm: 'Energous',
-        dateRange: '5 Years'
+        dateRange: '2 Years'
     });
   }
 
