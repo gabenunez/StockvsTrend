@@ -6,11 +6,11 @@
 	align-items: center;
 }
 
-.jumbotron {
+div.jumbotron {
 	padding: 5px;
 	margin: 0;
 	background-color: #424549;
-	border-radius: none;
+	border-radius: 0;
 }
 
 .sidebar {
