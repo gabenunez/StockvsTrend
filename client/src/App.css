@@ -85,6 +85,16 @@ form {
     text-align: center;
 }
 
+.attribution {
+	font-size: 12px;
+	color: #c1c1c1;
+	margin-bottom: 0;
+}
+
+.attribution > a {
+	color: #c1c1c1;
+}
+
 .disclaimer {
 	font-size: 12px;
 	color: #929292;

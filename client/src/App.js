@@ -290,6 +290,7 @@ class App extends Component {
                       trendApiError={this.state.trendApiError}
                     />
                   </div>
+                  <p className='text-center attribution'>Stock data provided for free by <a href='https://iextrading.com/developer/'>IEX</a>. <a href='https://iextrading.com/api-exhibit-a/'>View IEX’s Terms of Use</a>.</p>
                   <p className='text-center disclaimer'>Disclaimer: We are not liable for any losses associated with the use of this tool.</p>
                 </div>
                 </div>
