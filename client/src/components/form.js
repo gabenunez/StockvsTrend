@@ -44,6 +44,7 @@ const Form = (props) => {
                     <option>2 Years</option>
                     <option>5 Years</option>
                 </select>
+                <div className='form-error'>{props.dateRangeError ? 'Please select a date range.' : ''}</div>
             </div>
             
             <div className='form-row'>

@@ -22,6 +22,7 @@ class App extends Component {
       trendSearchTerm: 'Energous',
       dateRange: '2 Years',
 
+      dateRangeError: '',
       stockApiError: '',
       trendApiError: ''
     };
@@ -70,6 +71,20 @@ class App extends Component {
 
   handleOnSubmit(event) {
     event.preventDefault();
+
+    // Check if date range is selected
+    if(this.state.dateRange === 'Select a date range') {
+      this.setState({
+        dateRangeError: true
+      });
+
+      return;
+    } 
+
+    this.setState({
+      dateRangeError: false
+    });
+
     this.updateGraphsWithState();
   }
 
@@ -252,6 +267,7 @@ class App extends Component {
                 trendSearchTerm={this.state.trendSearchTerm}
                 dateRange={this.state.dateRange}
                 
+                dateRangeError={this.state.dateRangeError}
                 stockIsInvalid={this.state.stockIsInvalid}
                 trendIsInvalid={this.state.trendIsInvalid}
               />
