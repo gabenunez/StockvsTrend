@@ -18,6 +18,12 @@ app.get('/api/googletrends', (req, res) => {
             startTime: moment().subtract(dateNumber, dateType).toDate()
         })
         .then(function(results){
+            
+            let paresedData = JSON.parse(results);
+            if(!paresedData.default.timelineData) {
+                console.log('Error with data:', paresedData);
+            }
+
             res.send({results});
         })
         .catch(function(error){

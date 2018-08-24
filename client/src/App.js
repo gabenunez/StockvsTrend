@@ -161,6 +161,14 @@ class App extends Component {
     // Parse this JSON to an object
     trendsData = JSON.parse(trendsData.results);
 
+    // Check if we got the data we expected.
+    if(!trendsData.default.timelineData) {
+      console.log(trendsData);
+      this.setState({
+        trendIsInvalid: true
+      });
+    }
+
     // Just one more extra step to get the timeline data!
     trendsData = trendsData.default.timelineData;
 
