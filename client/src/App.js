@@ -280,7 +280,7 @@ class App extends Component {
                 trendIsInvalid={this.state.trendIsInvalid}
               />
 
-              <p className='text-center feedback'><a href="https://github.com/gabenunez/StockvsTrend/issues">Feedback? We're all ears.</a></p>
+              <p className='text-center feedback'><a href="https://mailchi.mp/2b50831a14a6/gabenunez">I'm working on a new project... want in? <br /> I promise it's highly related.</a></p>
             </div>
             <div className="col-md-8 order-2 graph-container">
               <div className='row'>
