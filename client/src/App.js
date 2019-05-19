@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Graph from './components/graph';
 import Form from './components/form';
+import { connect } from 'react-redux';
+import { fetchStockData } from './actions/stockActions';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
@@ -11,10 +13,6 @@ class App extends Component {
 
     this.state = {
       tickerSymbol: 'WATT',
-      selectedTicker: null,
-      stockData: null,
-
-      stockIsInvalid: false,
       trendIsInvalid: false,
 
       trendsData: null,
@@ -23,7 +21,6 @@ class App extends Component {
       dateRange: '2 Years',
 
       dateRangeError: '',
-      stockApiError: '',
       trendApiError: ''
     };
 
@@ -42,7 +39,7 @@ class App extends Component {
   }
 
   updateGraphsWithState() {
-    this.getStockData(this.state.tickerSymbol, this.state.dateRange);
+    this.props.fetchStockData(this.state.tickerSymbol, this.state.dateRange);
     this.getTrendData(this.state.trendSearchTerm, this.state.dateRange);
   }
 
@@ -292,19 +289,19 @@ class App extends Component {
                 <div className="col-md-12">
                   <h3 className="text-center stock-color graph-heading">
                     Stock{' '}
-                    {this.state.selectedTicker
-                      ? `(${this.state.selectedTicker.toLocaleUpperCase()})`
+                    {this.props.selectedTicker
+                      ? `(${this.props.selectedTicker.toLocaleUpperCase()})`
                       : ''}
                   </h3>
                   <div className="graph-div">
                     <Graph
-                      list={this.state.stockData}
+                      list={this.props.stockData}
                       line_name="Stock"
                       line_dataKey="close"
                       line_color="#8884d8"
                       xAxis_dataKey="label"
-                      stockIsInvalid={this.state.stockIsInvalid}
-                      stockApiError={this.state.stockApiError}
+                      stockIsInvalid={this.props.stockIsInvalid}
+                      stockApiError={this.props.stockApiError}
                     />
                   </div>
                 </div>
@@ -351,4 +348,14 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  stockData: state.stocks.stockData,
+  selectedTicker: state.stocks.selectedTicker,
+  stockIsInvalid: state.stocks.stockIsInvalid,
+  stockApiError: state.stocks.stockApiError
+});
+
+export default connect(
+  mapStateToProps,
+  { fetchStockData }
+)(App);

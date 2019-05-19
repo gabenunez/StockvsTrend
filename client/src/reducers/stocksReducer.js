@@ -7,21 +7,11 @@ import {
 import { STOCK_SET_TICKER } from '../actions/types';
 
 const initialState = {
-  tickerSymbol: 'WATT',
   selectedTicker: null,
   stockData: null,
 
   stockIsInvalid: false,
-  trendIsInvalid: false,
-
-  trendsData: null,
-  selectedTrend: null,
-  trendSearchTerm: 'Energous',
-  dateRange: '2 Years',
-
-  dateRangeError: '',
-  stockApiError: '',
-  trendApiError: ''
+  stockApiError: ''
 };
 
 export default function(state = initialState, action) {
