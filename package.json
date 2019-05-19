@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "express": "^4.16.2",
-    "google-trends-api": "^4.7.0",
-    "moment": "^2.22.2"
+    "express": "^4.17.0",
+    "google-trends-api": "^4.9.0",
+    "moment": "^2.24.0"
   },
   "devDependencies": {
     "concurrently": "^3.5.0"
