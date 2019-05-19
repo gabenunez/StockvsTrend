@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { 
+    this.state = {
       tickerSymbol: 'WATT',
       selectedTicker: null,
       stockData: null,
@@ -48,9 +48,9 @@ class App extends Component {
 
   resetFormFields() {
     this.setState({
-        tickerSymbol: 'WATT',
-        trendSearchTerm: 'Energous',
-        dateRange: '2 Years'
+      tickerSymbol: 'WATT',
+      trendSearchTerm: 'Energous',
+      dateRange: '2 Years'
     });
   }
 
@@ -73,13 +73,13 @@ class App extends Component {
     event.preventDefault();
 
     // Check if date range is selected
-    if(this.state.dateRange === 'Select a date range') {
+    if (this.state.dateRange === 'Select a date range') {
       this.setState({
         dateRangeError: true
       });
 
       return;
-    } 
+    }
 
     this.setState({
       dateRangeError: false
@@ -89,15 +89,12 @@ class App extends Component {
   }
 
   async fetchData(apiEndpoint, apiParams) {
-
     let urlParms = '';
     Object.keys(apiParams).forEach(key => {
-      urlParms += `${key}=${apiParams[key]}&`
+      urlParms += `${key}=${apiParams[key]}&`;
     });
 
-    const response = await fetch(
-      `/api/${apiEndpoint}?${urlParms}`
-    );
+    const response = await fetch(`/api/${apiEndpoint}?${urlParms}`);
 
     let body;
     if (response.status !== 200) {
@@ -110,12 +107,12 @@ class App extends Component {
     } else {
       body = await response.json();
     }
-    
+
     return body;
   }
 
   async getTrendData(trendSearchTerm, dateRange) {
-    // Magic from 
+    // Magic from
     // https://tinyurl.com/nodewithreact
 
     // Trim whitespace from both sides of search term
@@ -126,7 +123,7 @@ class App extends Component {
       trendIsInvalid: false,
       trendApiError: ''
     });
-  
+
     // Checks if entered term isn't empty
     if (searchTerm.length < 1) {
       this.setState({
@@ -146,15 +143,13 @@ class App extends Component {
     }
 
     // Get dat data from Google Trends!
-    let trendsData = await this.fetchData('googletrends', 
-      {
-        dateRange,
-        searchTerm
-      }
-    );
+    let trendsData = await this.fetchData('googletrends', {
+      dateRange,
+      searchTerm
+    });
 
     // Check we actually get some data
-    if(!trendsData) {
+    if (!trendsData) {
       return;
     }
 
@@ -162,7 +157,7 @@ class App extends Component {
     trendsData = JSON.parse(trendsData.results);
 
     // Check if we got the data we expected.
-    if(!trendsData.default.timelineData) {
+    if (!trendsData.default.timelineData) {
       console.log(trendsData);
       this.setState({
         trendIsInvalid: true
@@ -184,7 +179,7 @@ class App extends Component {
     }
 
     // Set state of trends if all checks pass!
-    this.setState({ 
+    this.setState({
       trendsData: trendsData,
       selectedTrend: searchTerm
     });
@@ -199,7 +194,7 @@ class App extends Component {
     });
 
     // Check stock ticker entry isn't empty
-    if(stockTicker < 1) {
+    if (stockTicker < 1) {
       this.setState({
         selectedTicker: stockTicker,
         stockIsInvalid: true,
@@ -210,7 +205,7 @@ class App extends Component {
     }
 
     // If ticker isn't the same, set stockData to null (for loading effect)
-    if(stockTicker !== this.state.selectedTicker) {
+    if (stockTicker !== this.state.selectedTicker) {
       this.setState({
         stockData: null,
         selectedTicker: null
@@ -224,23 +219,23 @@ class App extends Component {
     });
 
     // Check if any data is recieved to begin with
-    if(!data) {
+    if (!data) {
       return;
     }
 
     // Check for external server error.
-    if(data.error) {
+    if (data.error) {
       this.setState({
         stockApiError: data.error,
         selectedTicker: stockTicker,
         stockData: null
-      })
+      });
 
       return;
     }
 
     // If returned array has nothing (404), create error.
-    if(data.length < 1) {
+    if (data.length < 1) {
       this.setState({
         selectedTicker: stockTicker,
         stockIsInvalid: true,
@@ -255,7 +250,6 @@ class App extends Component {
       selectedTicker: stockTicker,
       stockData: data
     });
-
   }
 
   render() {
@@ -263,36 +257,52 @@ class App extends Component {
       <div className="jumbotron vertical-center">
         <div className="container">
           <div className="row">
-            <div className='col-md-4 order-1 sidebar'>
-              <h1 className='text-center'><span className='stock-color'>Stock</span> vs <span className='trend-color'>Trend</span></h1>
-              <p className='open-source'><a href="https://github.com/gabenunez/StockvsTrend/..">An Open Source Project</a> by <a href="https://github.com/gabenunez/">Gabe Nunez</a></p>
+            <div className="col-md-4 order-1 sidebar">
+              <h1 className="text-center">
+                <span className="stock-color">Stock</span> vs{' '}
+                <span className="trend-color">Trend</span>
+              </h1>
+              <p className="open-source">
+                <a href="https://github.com/gabenunez/StockvsTrend/..">
+                  An Open Source Project
+                </a>{' '}
+                by <a href="https://github.com/gabenunez/">Gabe Nunez</a>
+              </p>
               <Form
                 resetFormFields={this.resetFormFields}
                 handleInputChange={this.handleInputChange}
                 handleOnSubmit={this.handleOnSubmit}
-
                 tickerSymbol={this.state.tickerSymbol}
                 trendSearchTerm={this.state.trendSearchTerm}
                 dateRange={this.state.dateRange}
-                
                 dateRangeError={this.state.dateRangeError}
                 stockIsInvalid={this.state.stockIsInvalid}
                 trendIsInvalid={this.state.trendIsInvalid}
               />
 
-              <p className='text-center feedback'><a href="https://mailchi.mp/2b50831a14a6/gabenunez">I'm working on a new project... want in? <br /> I promise it's highly related.</a></p>
+              <p className="text-center feedback">
+                <a href="https://mailchi.mp/2b50831a14a6/gabenunez">
+                  I'm working on a new project... want in? <br /> I promise it's
+                  highly related.
+                </a>
+              </p>
             </div>
             <div className="col-md-8 order-2 graph-container">
-              <div className='row'>
-                <div className='col-md-12'>
-                  <h3 className='text-center stock-color graph-heading'>Stock {this.state.selectedTicker ?  `(${this.state.selectedTicker.toLocaleUpperCase()})` : ''}</h3>
-                  <div className='graph-div'>
-                    <Graph 
-                      list={this.state.stockData} 
-                      line_name='Stock'
-                      line_dataKey='close'
-                      line_color='#8884d8'
-                      xAxis_dataKey='label'
+              <div className="row">
+                <div className="col-md-12">
+                  <h3 className="text-center stock-color graph-heading">
+                    Stock{' '}
+                    {this.state.selectedTicker
+                      ? `(${this.state.selectedTicker.toLocaleUpperCase()})`
+                      : ''}
+                  </h3>
+                  <div className="graph-div">
+                    <Graph
+                      list={this.state.stockData}
+                      line_name="Stock"
+                      line_dataKey="close"
+                      line_color="#8884d8"
+                      xAxis_dataKey="label"
                       stockIsInvalid={this.state.stockIsInvalid}
                       stockApiError={this.state.stockApiError}
                     />
@@ -300,26 +310,40 @@ class App extends Component {
                 </div>
               </div>
 
-              <div className='row'>
-                <div className='col-md-12'>
-                  <h3 className='text-center trend-color graph-heading'>Trend {this.state.selectedTrend || this.state.trendIsInvalid ? `(${this.state.selectedTrend})` : ''}</h3>
-                  <div className='graph-div'>
-                    <Graph 
+              <div className="row">
+                <div className="col-md-12">
+                  <h3 className="text-center trend-color graph-heading">
+                    Trend{' '}
+                    {this.state.selectedTrend || this.state.trendIsInvalid
+                      ? `(${this.state.selectedTrend})`
+                      : ''}
+                  </h3>
+                  <div className="graph-div">
+                    <Graph
                       list={this.state.trendsData}
-                      line_name='Google Trend'
-                      line_dataKey='value'
-                      line_color='#f54336'
-                      xAxis_dataKey='formattedTime'
+                      line_name="Google Trend"
+                      line_dataKey="value"
+                      line_color="#f54336"
+                      xAxis_dataKey="formattedTime"
                       trendIsInvalid={this.state.trendIsInvalid}
                       trendApiError={this.state.trendApiError}
                     />
                   </div>
-                  <p className='text-center attribution'>Stock data provided for free by <a href='https://iextrading.com/developer/'>IEX</a>. <a href='https://iextrading.com/api-exhibit-a/'>View IEX’s Terms of Use</a>.</p>
-                  <p className='text-center disclaimer'>Disclaimer: We are not liable for any losses associated with the use of this tool.</p>
+                  <p className="text-center attribution">
+                    Stock data provided for free by{' '}
+                    <a href="https://iextrading.com/developer/">IEX</a>.{' '}
+                    <a href="https://iextrading.com/api-exhibit-a/">
+                      View IEX’s Terms of Use
+                    </a>
+                    .
+                  </p>
+                  <p className="text-center disclaimer">
+                    Disclaimer: We are not liable for any losses associated with
+                    the use of this tool.
+                  </p>
                 </div>
-                </div>
+              </div>
             </div>
-
           </div>
         </div>
       </div>
