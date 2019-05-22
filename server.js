@@ -52,15 +52,19 @@ app.get('/api/stocks', (req, res) => {
 
     const data = req.query;
 
+    // Get Stock API key from Heroku or include it from or local json file.
+    const STOCK_API_KEY = process.env.STOCK_API_KEY || require('./API_KEYS').STOCKS;
+
+    // Note: I need to get this moved over to the new API :)
     const getStock = (formatedTimeFrame) => {
-        axios.get(`https://api.iextrading.com/1.0/stock/${data.tickerSymbol}/chart/${formatedTimeFrame}`)
+        axios.get(`https://cloud.iexapis.com/v1/stock/${data.tickerSymbol}/chart/${formatedTimeFrame}?token=${STOCK_API_KEY}`)
         .then((response) => {
             res.send(response.data);
         }).catch((error) => {
             if (error.response.status === 404) {
                 res.send([]);
             } else {
-                console.log(error.message);
+                console.error(error.message);
                 res.send({error: 'Unable to get data from Stocks API.'});
             }
         });
