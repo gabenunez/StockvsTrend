@@ -37,7 +37,7 @@ export const fetchStockData = (tickerSymbol, dateRange) => dispatch => {
   });
 
   // Fetch stock data!
-  fetchData('stocks', { tickerSymbol, dateRange })
+  fetchData('stocks', { tickerSymbol: stockTicker, dateRange })
     .then(data => finalCheck(data))
     .catch(error => serverError(error));
 
