@@ -26,7 +26,6 @@ class App extends Component {
 
     this.resetFormFields = this.resetFormFields.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.getStockData = this.getStockData.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.updateGraphsWithState = this.updateGraphsWithState.bind(this);
   }
@@ -179,73 +178,6 @@ class App extends Component {
     this.setState({
       trendsData: trendsData,
       selectedTrend: searchTerm
-    });
-  }
-
-  async getStockData(tickerSymbol, dateRange) {
-    const stockTicker = tickerSymbol.trim();
-
-    this.setState({
-      stockIsInvalid: false,
-      stockApiError: ''
-    });
-
-    // Check stock ticker entry isn't empty
-    if (stockTicker < 1) {
-      this.setState({
-        selectedTicker: stockTicker,
-        stockIsInvalid: true,
-        stockData: null
-      });
-
-      return;
-    }
-
-    // If ticker isn't the same, set stockData to null (for loading effect)
-    if (stockTicker !== this.state.selectedTicker) {
-      this.setState({
-        stockData: null,
-        selectedTicker: null
-      });
-    }
-
-    // Fetch stock data!
-    const data = await this.fetchData('stocks', {
-      tickerSymbol,
-      dateRange
-    });
-
-    // Check if any data is recieved to begin with
-    if (!data) {
-      return;
-    }
-
-    // Check for external server error.
-    if (data.error) {
-      this.setState({
-        stockApiError: data.error,
-        selectedTicker: stockTicker,
-        stockData: null
-      });
-
-      return;
-    }
-
-    // If returned array has nothing (404), create error.
-    if (data.length < 1) {
-      this.setState({
-        selectedTicker: stockTicker,
-        stockIsInvalid: true,
-        stockData: null
-      });
-
-      return;
-    }
-
-    // Set stock state after all above checks.
-    this.setState({
-      selectedTicker: stockTicker,
-      stockData: data
     });
   }
 
