@@ -6,17 +6,7 @@ import {
   STOCK_SET_TICKER
 } from './types';
 
-const fetchData = (apiEndpoint, apiParams) => {
-  let urlParms = '';
-  Object.keys(apiParams).forEach(key => {
-    urlParms += `${key}=${apiParams[key]}&`;
-  });
-
-  return fetch(`/api/${apiEndpoint}?${urlParms}`).then(res => res.json());
-
-  // stockApiError: errorMsg,
-  // trendApiError: errorMsg
-};
+import { fetchData } from './_helpers/fetchData';
 
 export const fetchStockData = (tickerSymbol, dateRange) => dispatch => {
   const stockTicker = tickerSymbol.trim();
