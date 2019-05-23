@@ -2,9 +2,9 @@ import {
   STOCK_DATA_REQUESTED,
   STOCK_DATA_SUCCESS,
   STOCK_DATA_INVALID,
-  STOCK_DATA_FAILED
+  STOCK_DATA_FAILED,
+  STOCK_SET_TICKER
 } from '../actions/types';
-import { STOCK_SET_TICKER } from '../actions/types';
 
 const initialState = {
   selectedTicker: null,
