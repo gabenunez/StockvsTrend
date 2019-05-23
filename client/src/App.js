@@ -20,8 +20,7 @@ class App extends Component {
       trendSearchTerm: 'Energous',
       dateRange: '2 Years',
 
-      dateRangeError: '',
-      trendApiError: ''
+      dateRangeError: ''
     };
 
     this.resetFormFields = this.resetFormFields.bind(this);
