@@ -322,8 +322,8 @@ class App extends Component {
                     the use of this tool.
                   </p>
                 </div>
+              </div>
             </div>
-
           </div>
         </div>
       </div>
