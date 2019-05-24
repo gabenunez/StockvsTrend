@@ -6,7 +6,7 @@ import {
   STOCK_SET_TICKER
 } from './types';
 
-import { fetchData } from './_helpers/fetchData';
+import { fetchData } from './_utils/fetchData';
 
 export const fetchStockData = (tickerSymbol, dateRange) => dispatch => {
   const stockTicker = tickerSymbol.trim();
