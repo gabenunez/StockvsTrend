@@ -24,7 +24,9 @@ export default function(state = initialState, action) {
     case GTRENDS_DATA_REQUESTED:
       return {
         ...state,
-        trendsData: null
+        trendsData: null,
+        trendIsInvalid: false,
+        trendApiError: ''
       };
 
     case GTRENDS_DATA_INVALID:

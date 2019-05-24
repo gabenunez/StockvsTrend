@@ -3,6 +3,7 @@ import Graph from './components/graph';
 import Form from './components/form';
 import { connect } from 'react-redux';
 import { fetchStockData } from './actions/stockActions';
+import { fetchGoogleTrendsData } from './actions/googleTrends';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
@@ -13,10 +14,6 @@ class App extends Component {
 
     this.state = {
       tickerSymbol: 'WATT',
-      trendIsInvalid: false,
-
-      trendsData: null,
-      selectedTrend: null,
       trendSearchTerm: 'Energous',
       dateRange: '2 Years',
 
@@ -38,7 +35,11 @@ class App extends Component {
 
   updateGraphsWithState() {
     this.props.fetchStockData(this.state.tickerSymbol, this.state.dateRange);
-    this.getTrendData(this.state.trendSearchTerm, this.state.dateRange);
+
+    this.props.fetchGoogleTrendsData(
+      this.state.trendSearchTerm,
+      this.state.dateRange
+    );
   }
 
   resetFormFields() {
@@ -83,103 +84,6 @@ class App extends Component {
     this.updateGraphsWithState();
   }
 
-  async fetchData(apiEndpoint, apiParams) {
-    let urlParms = '';
-    Object.keys(apiParams).forEach(key => {
-      urlParms += `${key}=${apiParams[key]}&`;
-    });
-
-    const response = await fetch(`/api/${apiEndpoint}?${urlParms}`);
-
-    let body;
-    if (response.status !== 200) {
-      const errorMsg = 'Unable to connect to API server.';
-      this.setState({
-        stockApiError: errorMsg,
-        trendApiError: errorMsg
-      });
-      body = null;
-    } else {
-      body = await response.json();
-    }
-
-    return body;
-  }
-
-  async getTrendData(trendSearchTerm, dateRange) {
-    // Magic from
-    // https://tinyurl.com/nodewithreact
-
-    // Trim whitespace from both sides of search term
-    const searchTerm = trendSearchTerm.trim();
-
-    // Auto-magically set trendInvalid to false
-    this.setState({
-      trendIsInvalid: false,
-      trendApiError: ''
-    });
-
-    // Checks if entered term isn't empty
-    if (searchTerm.length < 1) {
-      this.setState({
-        trendIsInvalid: true,
-        trendsData: null
-      });
-
-      return;
-    }
-
-    // Check if trend is already selected, then sets null (for loading effect)
-    if (searchTerm !== this.state.selectedTrend) {
-      this.setState({
-        trendsData: null,
-        selectedTrend: null
-      });
-    }
-
-    // Get dat data from Google Trends!
-    let trendsData = await this.fetchData('googletrends', {
-      dateRange,
-      searchTerm
-    });
-
-    // Check we actually get some data
-    if (!trendsData) {
-      return;
-    }
-
-    // Parse this JSON to an object
-    trendsData = JSON.parse(trendsData.results);
-
-    // Check if we got the data we expected.
-    if (!trendsData.default.timelineData) {
-      console.log(trendsData);
-      this.setState({
-        trendIsInvalid: true
-      });
-    }
-
-    // Just one more extra step to get the timeline data!
-    trendsData = trendsData.default.timelineData;
-
-    // Check we get a response back with data
-    if (trendsData.length < 1) {
-      this.setState({
-        trendIsInvalid: true,
-        selectedTrend: searchTerm,
-        trendsData: null
-      });
-
-      return;
-    }
-
-    // Set state of trends if all checks pass!
-    this.setState({
-      trendsData: trendsData,
-      selectedTrend: searchTerm
-    });
-  }
-
   render() {
     return (
       <div className="jumbotron vertical-center">
@@ -205,7 +109,7 @@ class App extends Component {
                 dateRange={this.state.dateRange}
                 dateRangeError={this.state.dateRangeError}
                 stockIsInvalid={this.state.stockIsInvalid}
-                trendIsInvalid={this.state.trendIsInvalid}
+                trendIsInvalid={this.props.trendIsInvalid}
               />
 
               <p className="text-center feedback">
@@ -242,19 +146,19 @@ class App extends Component {
                 <div className="col-md-12">
                   <h3 className="text-center trend-color graph-heading">
                     Trend{' '}
-                    {this.state.selectedTrend || this.state.trendIsInvalid
-                      ? `(${this.state.selectedTrend})`
+                    {this.props.selectedTrend || this.props.trendIsInvalid
+                      ? `(${this.props.selectedTrend})`
                       : ''}
                   </h3>
                   <div className="graph-div">
                     <Graph
-                      list={this.state.trendsData}
+                      list={this.props.trendsData}
                       line_name="Google Trend"
                       line_dataKey="value"
                       line_color="#f54336"
                       xAxis_dataKey="formattedTime"
-                      trendIsInvalid={this.state.trendIsInvalid}
-                      trendApiError={this.state.trendApiError}
+                      trendIsInvalid={this.props.trendIsInvalid}
+                      trendApiError={this.props.trendApiError}
                     />
                   </div>
                   <p className="text-center attribution">
@@ -283,10 +187,14 @@ const mapStateToProps = state => ({
   stockData: state.stocks.stockData,
   selectedTicker: state.stocks.selectedTicker,
   stockIsInvalid: state.stocks.stockIsInvalid,
-  stockApiError: state.stocks.stockApiError
+  stockApiError: state.stocks.stockApiError,
+  trendIsInvalid: state.googleTrends.trendIsInvalid,
+  trendsData: state.googleTrends.trendsData,
+  selectedTrend: state.googleTrends.selectedTrend,
+  trendApiError: state.googleTrends.trendApiError
 });
 
 export default connect(
   mapStateToProps,
-  { fetchStockData }
+  { fetchStockData, fetchGoogleTrendsData }
 )(App);
