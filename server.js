@@ -63,8 +63,10 @@ app.get('/api/stocks', (req, res) => {
         }).catch((error) => {
             if (error.response.status === 404) {
                 res.send([]);
-            } else {
-                console.error(error.message);
+            } else if(error.response.status === 402) {
+                res.send({error: "We've ran out of API requests for the month 😭"});
+            }
+            else {
                 res.send({error: 'Unable to get data from Stocks API.'});
             }
         });
