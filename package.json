@@ -9,7 +9,7 @@
     "server": "nodemon server.js"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "express": "^4.17.0",
     "google-trends-api": "^4.9.0",
     "moment": "^2.24.0"
