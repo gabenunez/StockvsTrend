@@ -12,7 +12,7 @@
     "axios": "^0.18.0",
     "express": "^4.17.0",
     "google-trends-api": "^4.9.0",
-    "moment": "^2.24.0"
+    "moment": "^2.29.2"
   },
   "devDependencies": {
     "concurrently": "^3.5.0"
